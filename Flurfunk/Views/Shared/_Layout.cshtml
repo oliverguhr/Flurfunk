@@ -70,9 +70,17 @@
         <div class="navbar-inner">
             <div class="container">
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><a class="brand" href="@Url.Action("Index", "Home")">
-                   <h1><i class="icon-group" style="margin-right:10px"></i>Flurfunk</h1></a>
-               @* <ul class="nav" style="margin-left: 300px">
+                </a>
+                <a class="brand" href="@Url.Action("Index", "Home")">
+                    <h1><i class="icon-group" style="margin-right: 10px"></i>Flurfunk</h1>
+                </a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav" style="margin-top:28px">
+                        <li><a href="#">Über</a> </li>
+                        <li><a href="#">Team</a> </li>                        
+                    </ul>
+                </div>
+                @* <ul class="nav" style="margin-left: 300px">
                     <li><a href="http://code-inside.de/blog-in" title="blog"><i class="icon-rss"></i></a></li>
                     <li><a href="https://github.com/Code-Inside/" title="GitHub"><i class="icon-github"></i></a> </li>
                     <li><a href="http://code-inside.de/blog" title="Blog in German"><i class="icon-rss"></i>²</a></li>
