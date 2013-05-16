@@ -35,6 +35,14 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MongoDB.Bson, Version=1.8.1.20, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.8.1.20, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -93,6 +101,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DatabaseTest.cs" />
+    <Compile Include="Data\MessageServiceTest.cs" />
+    <Compile Include="Data\UserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -100,9 +111,16 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="mongo.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flurfunk.Data\Flurfunk.Data.csproj">
+      <Project>{9c49c94e-8152-43ad-81b5-9625ae8d6f42}</Project>
+      <Name>Flurfunk.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Flurfunk\Flurfunk.csproj">
       <Project>{A40690FA-49ED-4CA8-B67A-E08D9A783A9F}</Project>
       <Name>Flurfunk</Name>

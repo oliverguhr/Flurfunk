@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StackExchange.Profiling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,13 +17,30 @@ namespace Flurfunk
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            Bootstrapper.Initialise();
 
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+        }
+
+        protected void Application_BeginRequest()
+        {
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Start();
+            }
+        }
+
+        protected void Application_EndRequest()
+        {
+            if (Request.IsLocal)
+            {
+                MiniProfiler.Stop();
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk", "Flurfunk\Flurfu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk.Tests", "Flurfunk.Tests\Flurfunk.Tests.csproj", "{444E5CAD-E406-4CAD-A028-72CF7247A874}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk.Data", "Flurfunk.Data\Flurfunk.Data.csproj", "{9C49C94E-8152-43AD-81B5-9625AE8D6F42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +21,15 @@ Global
 		{444E5CAD-E406-4CAD-A028-72CF7247A874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{444E5CAD-E406-4CAD-A028-72CF7247A874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{444E5CAD-E406-4CAD-A028-72CF7247A874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C49C94E-8152-43AD-81B5-9625AE8D6F42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C49C94E-8152-43AD-81B5-9625AE8D6F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C49C94E-8152-43AD-81B5-9625AE8D6F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C49C94E-8152-43AD-81B5-9625AE8D6F42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal
