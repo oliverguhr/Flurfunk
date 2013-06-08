@@ -24,6 +24,7 @@ namespace Flurfunk
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+           
             AuthConfig.RegisterAuth();
         }
 
@@ -40,7 +41,7 @@ namespace Flurfunk
             if (Request.IsLocal)
             {
                 MiniProfiler.Stop();
-            }
+            }   
         }
     }
 }

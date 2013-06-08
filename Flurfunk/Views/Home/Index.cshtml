@@ -23,14 +23,19 @@
         <h3>
             <img src="~/Images/koitz.jpg" style="height: 100px" />
             Michael Koitz</h3>
-        <form class="form">
-            <div class="control-group">
-                <div class="controls">
-                    <textarea placeholder="Teile es mit allen…" class="span3" id="textarea" rows="3"></textarea>
+        <div ng-controller="sendMessageController">
+            <form class="form" ng-submit="sendMessage()">
+                <div class="control-group">
+                    <div class="controls">
+                        <textarea ng-model="message" ng-change="messageUpdate()" placeholder="Teile es mit allen…" class="span3" id="textarea" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-{{messageButtonClass}}">Senden</button>
+                    <h3 style="float: right">{{140 - message.length}}</h3>
+
                 </div>
-                <button type="submit" class="btn btn-primary">Senden</button>
-            </div>
-        </form>
+            </form>
+        </div>
 
         <h2>Filter</h2>
         <div class="input-append">
@@ -54,15 +59,30 @@
         </ul>
     </div>
 
-    <div class="row span9" style="float:right">
-        @for (int i = 0; i < 25; i++)
-        {
-            <div class="span8 thumbnail textmessage">
-                <a style="float: left; margin-right: 5px;" href="#User#Koitz">
-                    <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
-                Mit Einhundertundvierzig Zeichen Text kann man eine Menge sagen wenn man es clever formuliert. So kann man Informationen schnell teilen.
-            </div>   
-        }
+  @*  <div ng-controller="loadMessageController">
+        <div class="row span9" style="float: right">
+            @for (int i = 0; i < 25; i++)
+            {
+                <div class="span8 textmessage">
+                    <a style="float: left; margin-right: 5px;" href="#User#Koitz">
+                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
+                    Mit Einhundertundvierzig Zeichen Text kann man eine Menge sagen wenn man es clever formuliert. So kann man Informationen schnell teilen.
+                </div>   
+            }
 
+        </div>
+    </div>*@
+
+  <div ng-controller='loadMessageController'>
+  <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
+    <div class="row span9" style="float: right" ng-repeat='item in items'>
+          <div class="span8 textmessage">
+                    <a style="float: left; margin-right: 5px;" href="#User#Koitz">
+                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
+                  {{item.Text}}
+          </div>  
     </div>
+    <div ng-show='busy'>{{items.length}}Loading data...</div>
+  </div>
+</div>
 </div>

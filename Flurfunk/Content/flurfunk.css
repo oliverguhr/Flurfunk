@@ -1,6 +1,12 @@
 ﻿.textmessage {
-    margin-bottom: 25px;
+    padding-top: 15px;
+    padding-bottom: 10px;
     font-size: 21px;
     font-weight: 200;
     line-height: 27.5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.textmessage:hover{
+    background-color:#eee;
 }

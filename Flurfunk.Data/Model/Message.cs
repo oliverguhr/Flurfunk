@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Flurfunk.Data.Model
 {
+    [DataContract]
     public class Message : Validatable
     {
         /// <summary>
@@ -18,13 +20,14 @@ namespace Flurfunk.Data.Model
         /// <summary>
         /// the message text
         /// </summary>
-        [StringLength(160,ErrorMessage = "Must be between 1 and 160 characters", MinimumLength = 1)]
+        //[StringLength(160,ErrorMessage = "Must be between 1 and 160 characters", MinimumLength = 1)]
         public string Text { get; set; }
 
         /// <summary>
         /// User who wrote this message
         /// </summary>
-        [Required]
+        //[Required]
+        //[DataMember(IsRequired = true)]
         public ObjectId Creator { get; set; }
 
         /// <summary>
@@ -35,7 +38,8 @@ namespace Flurfunk.Data.Model
         /// <summary>
         /// DateTime when the message was created
         /// </summary>
-        [Required]
+        //[Required]
+        //[DataMember(IsRequired = true)]
         public DateTime Created { get; set; }
     }
 }
