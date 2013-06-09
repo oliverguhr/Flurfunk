@@ -1,12 +1,28 @@
 ﻿.textmessage {
     padding-top: 15px;
     padding-bottom: 10px;
-    font-size: 21px;
-    font-weight: 200;
+    font-size: 17px;
     line-height: 27.5px;
     border-bottom: 1px solid #ddd;
 }
 
 .textmessage:hover{
     background-color:#eee;
+}
+.textmessage:hover small{
+    visibility:visible;
+}
+
+.textmessage p {
+    margin-left: 10px;
+    min-height: 50px;
+    word-wrap: break-word;
+    padding-bottom:0px;
+}
+
+.textmessage small{
+    margin-left: 10px;
+    line-height: 10px;
+    font-size: 65%;
+    visibility:hidden;
 }

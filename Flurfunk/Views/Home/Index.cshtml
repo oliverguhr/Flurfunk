@@ -78,11 +78,12 @@
     <div class="row span9" style="float: right" ng-repeat='item in items'>
           <div id="{{item._id}}" class="span8 textmessage">
                     <a style="float: left; margin-right: 5px;" href="#User#Koitz">
-                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
-                  {{item.Text}}  {{app.convert.date(item.Created).toLocaleString()}}  
+                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>     
+              <p class="span6">{{item.Text}}</p>
+              <small class="span4">von michael koitz am {{getTimeString(item.Created)}}</small>
           </div>  
     </div>
-    <div ng-show='busy'>Loading data...</div>
+  @*  <div ng-show='busy'>Loading data...</div>*@
   </div>
 </div>
 </div>

@@ -57,6 +57,10 @@ function loadMessageController($scope, $http) {
     $scope.busy = false;
     $scope.end = false;
 
+    $scope.getTimeString = function (timestamp) {
+        return app.convert.date(timestamp).toLocaleString();
+    }
+
     $scope.nextPage = function () {
         if ($scope.busy) return;
         $scope.busy = true;
