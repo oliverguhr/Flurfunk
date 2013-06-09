@@ -13,9 +13,7 @@ namespace Flurfunk.Controllers
     {
         public ActionResult Index()
         {
-            SessionHelper.CurrentUser = new Data.Model.User() { _id = ObjectId.Empty, Name = "Heinzzz" };
-               
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            SessionHelper.CurrentUser = new Data.Model.User() { _id = ObjectId.GenerateNewId().ToString(), Name = "Heinzzz" };                           
 
             return View();
         }

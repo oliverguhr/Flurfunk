@@ -73,16 +73,16 @@
         </div>
     </div>*@
 
-  <div ng-controller='loadMessageController'>
-  <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='1'>
+  <div ng-controller='loadMessageController'>      
+  <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
     <div class="row span9" style="float: right" ng-repeat='item in items'>
-          <div class="span8 textmessage">
+          <div id="{{item._id}}" class="span8 textmessage">
                     <a style="float: left; margin-right: 5px;" href="#User#Koitz">
                         <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
-                  {{item.Text}}
+                  {{item.Text}}  {{app.convert.date(item.Created).toLocaleString()}}  
           </div>  
     </div>
-    <div ng-show='busy'>{{items.length}}Loading data...</div>
+    <div ng-show='busy'>Loading data...</div>
   </div>
 </div>
 </div>

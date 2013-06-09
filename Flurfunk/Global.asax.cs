@@ -1,4 +1,7 @@
-﻿using StackExchange.Profiling;
+﻿using Flurfunk.Helper;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +27,8 @@ namespace Flurfunk
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           
-            AuthConfig.RegisterAuth();
+
+            AuthConfig.RegisterAuth();        
         }
 
         protected void Application_BeginRequest()

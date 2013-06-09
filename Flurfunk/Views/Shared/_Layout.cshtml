@@ -17,14 +17,12 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <script type="text/javascript">
-        var flurfunk = angular.module('flurfunk', ['infinite-scroll']);
-
         var app = {
             ajax: {},
             baseUrl: '@Html.Raw(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath)',
-            angular:{},
+            angular: {},
             init: function () {
-                console.log("app init");        
+                console.log("app init");
             }
         };
     </script>

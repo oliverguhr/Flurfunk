@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Flurfunk.Data.Model
 {
@@ -13,7 +14,8 @@ namespace Flurfunk.Data.Model
         /// <summary>
         /// User Id
         /// </summary>
-        public ObjectId _id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string _id { get; set; }
 
         /// <summary>
         /// Username
@@ -37,7 +39,7 @@ namespace Flurfunk.Data.Model
         /// <summary>
         /// Groups where the user is a member
         /// </summary>
-        public Dictionary<ObjectId, string> Groups { get; set; }
+        public Dictionary<string, string> Groups { get; set; }
 
         /// <summary>
         /// saved searches, shown as filter to the user

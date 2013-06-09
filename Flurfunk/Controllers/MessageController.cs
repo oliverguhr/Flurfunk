@@ -18,10 +18,37 @@ namespace Flurfunk.Controllers
             this.messageService = messageService;
         }
 
-        public JsonResult Get(int count = 50, int startIndex = 0)
+        public JsonResult GetOlderThan(int count = 50, string time = "")
         {
-            return Json(messageService.Get(count, startIndex));
+            DateTime param;
+            if (string.IsNullOrWhiteSpace(time))
+            { 
+                param = DateTime.Now; 
+            }
+            else
+            {
+                param = time.FromJsonDateTime(); 
+            }
+
+            return Json(messageService.GetOlderThan(count, param));
         }
+
+        public JsonResult GetNewerThan(string time = "")
+        {
+            DateTime param;
+            if (string.IsNullOrWhiteSpace(time))
+            {
+                //todo: add propper error handling
+                return Json(new {});
+            }
+            else
+            {
+                param = time.FromJsonDateTime();
+            }
+
+            return Json(messageService.GetNewerThan(param));
+        }
+
 
         public JsonResult Find(int count = 50, int startIndex = 0, string keyword = "")
         {

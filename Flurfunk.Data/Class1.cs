@@ -20,12 +20,12 @@ namespace Flurfunk.Data
             db = database;
         }
 
-        public Message Create(string text, ObjectId creator)
+        public Message Create(string text, string creator)
         {
-            return Create(text, creator, ObjectId.Empty);
+            return Create(text, creator, ObjectId.Empty.ToString());
         }
 
-        public Message Create(string text, ObjectId creator, ObjectId Group)
+        public Message Create(string text, string creator, string Group)
         {
             Message newMessage = new Message() { Creator = creator, Text = text, Group = Group, Created = DateTime.Now };
             newMessage.Validate();
@@ -33,16 +33,27 @@ namespace Flurfunk.Data
             return newMessage;
         }
 
-        public void Delete(ObjectId messageId)
+        public void Delete(string messageId)
         {
             db.Messages.Remove(Query.EQ("_id", messageId));
         }
 
+        public List<Message> GetNewerThan(DateTime time)
+        {
+            return db.Messages.AsQueryable().Where(x => x.Created > time).OrderByDescending(x => x.Created).ToList();
+        }
+        public List<Message> GetOlderThan(int count, DateTime time)
+        {
+            return db.Messages.AsQueryable().Where(x => x.Created < time).OrderByDescending(x => x.Created).Take(count).ToList();
+        }
+
+        [Obsolete]
         public List<Message> Get(int count, int startIndex)
         {
             return db.Messages.AsQueryable().OrderBy(x => x.Created).Skip(startIndex).Take(count).ToList();
         }
 
+        [Obsolete]
         public List<Message> Get(int count, int startIndex, string keyword)
         {
             var textSearchCommand = new CommandDocument
@@ -61,7 +72,7 @@ namespace Flurfunk.Data
             }
 
             return result.OrderBy(x => x.Created).Skip(startIndex).Take(count).ToList();
-        }
+        }    
     }
 
     public class UserService : IUserService
@@ -100,7 +111,7 @@ namespace Flurfunk.Data
         }
 
         public User Get(string userName)
-        {            
+        {
             return db.Users.AsQueryable().Where(user => user.Name == userName).Single();
         }
     }
@@ -123,25 +134,25 @@ namespace Flurfunk.Data
             return newGroup;
         }
 
-        public void Join(ObjectId groupId, User user)
+        public void Join(string groupId, User user)
         {
             Group grouptToAdd = Get(groupId);
             user.Groups.Add(groupId, grouptToAdd.Name);
             db.Users.Save(user);
         }
 
-        public void Leave(ObjectId groupId, User user)
+        public void Leave(string groupId, User user)
         {
             user.Groups.Remove(groupId);
             db.Users.Save(user);
         }
 
-        public Group Get(ObjectId groupId)
+        public Group Get(string groupId)
         {
             return db.Groups.FindOneById(groupId);
         }
 
-        public List<User> GetAllUsersThatAreNotInGroup(ObjectId groupId)
+        public List<User> GetAllUsersThatAreNotInGroup(string groupId)
         {
             return db.Users.AsQueryable().Where(x => !x.Groups.ContainsKey(groupId)).ToList();
         }
