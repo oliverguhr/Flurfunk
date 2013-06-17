@@ -30,12 +30,15 @@ namespace Flurfunk.Data.Model
         /// </summary>
         [Required]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Creator { get; set; }
-
+        public string CreatorId { get; set; }
+        
+        [BsonIgnore]
+        public User Creator { get; set; }
+        
         /// <summary>
         /// If the is send to a group, this field contains the id of the group
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonRepresentation(BsonType.ObjectId)]        
         public string Group { get; set; }
 
         /// <summary>

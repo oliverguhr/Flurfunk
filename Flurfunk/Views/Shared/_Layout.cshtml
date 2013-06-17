@@ -20,7 +20,7 @@
     <script type="text/javascript">
         var app = {
             ajax: {},
-            baseUrl: '@Html.Raw(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath)',
+            baseUrl: '@Html.Raw(HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.ApplicationPath+"/")',
             angular: {},
             init: function () {
                 console.log("app init");

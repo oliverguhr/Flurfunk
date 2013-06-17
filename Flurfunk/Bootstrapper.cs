@@ -39,7 +39,8 @@ namespace Flurfunk
     public static void RegisterTypes(IUnityContainer container)
     {
         container.RegisterType<IDatabase, Database>(new InjectionConstructor(ConfigurationManager.AppSettings["mongoDb"], ConfigurationManager.AppSettings["mongoDbName"]));
-        container.RegisterType<IMessageService, MessageService>();    
+        container.RegisterType<IMessageService, MessageService>();
+        container.RegisterType<IUserService, UserService>();    
     }
   }
 }

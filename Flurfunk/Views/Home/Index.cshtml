@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Flurfunk.Data.Model.User
+@using Flurfunk.Helper
+@{
     ViewBag.Title = "";
 }
 @section featured {
@@ -21,8 +23,8 @@
 <div class="row">
     <div class="span3 sidebar">
         <h3>
-            <img src="~/Images/koitz.jpg" style="height: 100px" />
-            Michael Koitz</h3>
+            <img src="@Url.ProfilePicture(Model)" style="height: 100px" />@Model.Name
+            </h3>
         <div ng-controller="sendMessageController">
             <form class="form" ng-submit="sendMessage()">
                 <div class="control-group">
@@ -59,28 +61,14 @@
         </ul>
     </div>
 
-  @*  <div ng-controller="loadMessageController">
-        <div class="row span9" style="float: right">
-            @for (int i = 0; i < 25; i++)
-            {
-                <div class="span8 textmessage">
-                    <a style="float: left; margin-right: 5px;" href="#User#Koitz">
-                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>
-                    Mit Einhundertundvierzig Zeichen Text kann man eine Menge sagen wenn man es clever formuliert. So kann man Informationen schnell teilen.
-                </div>   
-            }
-
-        </div>
-    </div>*@
-
   <div ng-controller='loadMessageController'>      
   <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
     <div class="row span9" style="float: right" ng-repeat='item in items'>
           <div id="{{item._id}}" class="span8 textmessage">
                     <a style="float: left; margin-right: 5px;" href="#User#Koitz">
-                        <img src="~/Images/koitz.jpg" style="max-height: 75px" /></a>     
+                        <img src="{{getUserImageUrl(item.Creator.ProviderId)}}" style="max-height: 75px" /></a>     
               <p class="span6">{{item.Text}}</p>
-              <small class="span4">von michael koitz am {{getTimeString(item.Created)}}</small>
+              <small class="span4">von {{item.Creator.Name}} am {{getTimeString(item.Created)}}</small>
           </div>  
     </div>
   @*  <div ng-show='busy'>Loading data...</div>*@

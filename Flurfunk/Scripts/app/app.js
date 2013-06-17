@@ -5,5 +5,5 @@ app.convert = {
     {
         // json time -> /Date(1370804916504)/
         return new Date(parseInt(jsonTime.substr(6)));
-    }
+    },
 }

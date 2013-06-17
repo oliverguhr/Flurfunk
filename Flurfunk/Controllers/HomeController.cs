@@ -9,13 +9,12 @@ using System.Web.Mvc;
 
 namespace Flurfunk.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            SessionHelper.CurrentUser = new Data.Model.User() { _id = ObjectId.GenerateNewId().ToString(), Name = "Heinzzz" };                           
-
-            return View();
+            return View(SessionHelper.CurrentUser);
         }
 
         public ActionResult About()

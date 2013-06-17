@@ -61,6 +61,10 @@ function loadMessageController($scope, $http) {
         return app.convert.date(timestamp).toLocaleString();
     }
 
+    $scope.getUserImageUrl = function (userProviderId) {
+        return "http://graph.facebook.com/" + userProviderId + "/picture?type=normal";;
+    }
+
     $scope.nextPage = function () {
         if ($scope.busy) return;
         $scope.busy = true;

@@ -21,6 +21,7 @@ namespace Flurfunk
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
             var coustomCode = new ScriptBundle("~/bundles/app").IncludeDirectory("~/Scripts/app/", "*.js");
+            //todo: fix js code 
             coustomCode.Transforms.Clear();
             bundles.Add(coustomCode);
 

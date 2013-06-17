@@ -8,5 +8,7 @@ namespace Flurfunk.Data.Interface
         void Delete(MongoDB.Bson.ObjectId userId);
         Flurfunk.Data.Model.User Get(MongoDB.Bson.ObjectId userid);
         Flurfunk.Data.Model.User Get(string userName);
+        Flurfunk.Data.Model.User GetByProviderId(string providerId);
+        
     }
 }
