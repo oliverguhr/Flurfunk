@@ -1,16 +1,22 @@
 ﻿flurfunk.factory('messageService', function ($rootScope, $timeout) {
     var messageService = {};
 
+    messageService.filterKeyword = "";
+
     messageService.onRefresh = function () {
         console.log("onRefresh");
         messageService.loadNewMessages();
-        refreshTimer = $timeout(messageService.onRefresh, 5000);
+        messageService.refreshTimer = $timeout(messageService.onRefresh, 5000);
     }
-    var refreshTimer = $timeout(messageService.onRefresh, 5000);
-
+    messageService.refreshTimer = $timeout(messageService.onRefresh, 5000);
 
     messageService.loadNewMessages = function () {
         $rootScope.$broadcast('loadNewMessages');
+    };
+
+    messageService.setKeyword = function (keyword) {        
+        messageService.filterKeyword = keyword;
+        $rootScope.$broadcast('filterMessages');
     };
 
     return messageService;
@@ -52,7 +58,7 @@ function isMessagesInArray(id, messageArray)
     return false;
 }
 
-function loadMessageController($scope, $http) {
+function loadMessageController($scope, $http, messageService) {
     $scope.items = [];
     $scope.busy = false;
     $scope.end = false;
@@ -66,35 +72,59 @@ function loadMessageController($scope, $http) {
     }
 
     $scope.nextPage = function () {
-        if ($scope.busy) return;
-        $scope.busy = true;
+        if ($scope.busy || $scope.end) return;
+        $scope.busy = true;        
 
         var url = app.baseUrl + "message/GetOlderThan";
         console.log("Loading Messages Older Than" + $scope.after);
-        $http.post(url, { count: 50, time: $scope.after }).success(function (data) {
+        $http.post(url, { count: 50, time: $scope.after, 'keyword': messageService.filterKeyword }).success(function (data) {
             if (data.length === 0)
-                $scope.end = true;
-
-            if ($scope.end)
-                return;
+                $scope.end = true;          
 
             for (var i = 0; i < data.length; i++) {                
                     $scope.items.push(data[i]);
-            }           
-            $scope.after = $scope.items[$scope.items.length - 1].Created;
+            }
+            if ($scope.items[$scope.items.length - 1] != undefined)
+            {
+                $scope.after = $scope.items[$scope.items.length - 1].Created;
+            }
             $scope.busy = false;   
         });
     };
 
-    $scope.$on('loadNewMessages', function () {
-        console.log("fetching new messages:" + $scope.items[0].Created);
+    $scope.$on('loadNewMessages', function () {        
+        var time
+        //if there are no last messages.. 
+        if ($scope.items[0] === undefined) 
+        {
+            //give me all message that have been postet within the last minute
+            time ="/Date(" + (new Date().getTime() - 60000)+")/";
+        }
+        else
+        {
+            time = $scope.items[0].Created;
+        }
+        console.log("fetching new messages newer than " + app.convert.date(time));
+
         var url = app.baseUrl + "message/GetNewerThan";
-        $http.post(url, { time: $scope.items[0].Created }).success(function (data) {
+        $http.post(url, { 'time': time, 'keyword':messageService.filterKeyword }).success(function (data) {
             for (var i = 0; i < data.length; i++) {
                 if (!isMessagesInArray(data[i]._id, $scope.items))
                     $scope.items.splice(i, 0, data[i]);
             }                       
         });
+    });
+
+    $scope.$on('filterMessages', function () {
+        console.log("load new filtered messages");
+        console.log($scope.items);
+        //reset status 
+        $scope.end = false;
+        $scope.after = '';
+        $scope.items = [];
+        //and load filtered messages
+        $scope.nextPage();
+        
     });
 
 }

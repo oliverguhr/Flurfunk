@@ -43,6 +43,7 @@ namespace Wevision.Controllers
                 }
 
                 FormsAuthentication.SetAuthCookie(user.Name, false);
+                //todo: to store the userId with the cookie use this -> http://stackoverflow.com/questions/16241298/getting-the-current-user-id-not-name-using-forms-authentication
 
                 ControllerContext.HttpContext.Response.Cookies.Add(new HttpCookie("loggedIn", "true"));
 

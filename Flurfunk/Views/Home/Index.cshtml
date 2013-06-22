@@ -24,7 +24,7 @@
     <div class="span3 sidebar">
         <h3>
             <img src="@Url.ProfilePicture(Model)" style="height: 100px" />@Model.Name
-            </h3>
+        </h3>
         <div ng-controller="sendMessageController">
             <form class="form" ng-submit="sendMessage()">
                 <div class="control-group">
@@ -39,39 +39,44 @@
             </form>
         </div>
 
-        <h2>Filter</h2>
-        <div class="input-append">
-            <input class="span3" id="appendedInputButton" placeholder="nach Schlagwort filtern" size="16" type="text">
-            <button class="btn" type="button">+</button>
+        <div ng-controller='filterController'>
+            <h2>Filter</h2>
+            <div class="input-append">
+       
+                    <input class="span3" ng-model="filterKeyword" ng-change="filterUpdate()" placeholder="nach Schlagwort filtern" size="16" type="text">
+                    <button ng-click="addFilter()" class="btn {{addButtonClass}}" type="button">+</button>
+  
+            </div>
+            <ul class="nav nav-pills nav-stacked filters" >
+               @* <li class="active"><a href="#">alle Nachrichten</a></li>*@
+                <li ng-repeat='filter in filters' id="filter-{{$index}}"><a href="#" ng-click="selectFilter($index)" ><span class="keyword">{{filter}}</span><button ng-click="removeFilter(filter)" eat-click class="close">&times;</button> </a></li>                
+            </ul>
         </div>
-        <ul class="nav nav-pills nav-stacked">
-            <li class="active"><a href="#">alle Nachrichten</a></li>
-            <li><a href="#">Kunden</a></li>
-            <li><a href="#">Mittagessen</a></li>
-        </ul>
+
         <h2>Gruppen</h2>
         <div class="input-append">
             <input class="span3" id="appendedInputButton" placeholder="neue Gruppe erstellen" size="16" type="text">
             <button class="btn" type="button">+</button>
         </div>
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#">Projekt A</a></li>
-            <li><a href="#">Mittagessen Gruppe</a></li>
-            <li><a href="#">Abteilung B</a></li>
+            <li><a href="#">Projekt A<button class="close">&times;</button></a></li>
+            <li><a href="#">Mittagessen Gruppe<button class="close">&times;</button></a></li>
+            <li><a href="#">Abteilung B<button class="close">&times;</button></a> </li>
         </ul>
     </div>
 
-  <div ng-controller='loadMessageController'>      
-  <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
-    <div class="row span9" style="float: right" ng-repeat='item in items'>
-          <div id="{{item._id}}" class="span8 textmessage">
-                    <a style="float: left; margin-right: 5px;" href="#User#Koitz">
-                        <img src="{{getUserImageUrl(item.Creator.ProviderId)}}" style="max-height: 75px" /></a>     
-              <p class="span6">{{item.Text}}</p>
-              <small class="span4">von {{item.Creator.Name}} am {{getTimeString(item.Created)}}</small>
-          </div>  
+    <div ng-controller='loadMessageController'>
+        <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
+            <div class="row span9" style="float: right" ng-repeat='item in items'>
+                <div id="{{item._id}}" class="span8 textmessage">
+                    <span class="messageImage" >
+                        <img src="{{getUserImageUrl(item.Creator.ProviderId)}}"/>
+                    </span>
+                    <p class="span6">{{item.Text}}</p>
+                    <small class="span4">von {{item.Creator.Name}} am {{getTimeString(item.Created)}}</small>
+                </div>
+            </div>
+            @*  <div ng-show='busy'>Loading data...</div>*@
+        </div>
     </div>
-  @*  <div ng-show='busy'>Loading data...</div>*@
-  </div>
-</div>
 </div>

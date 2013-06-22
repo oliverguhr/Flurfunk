@@ -1,4 +1,7 @@
-﻿.textmessage {
+﻿html {
+    overflow:scroll;
+}
+.textmessage {
     padding-top: 15px;
     padding-bottom: 10px;
     font-size: 17px;
@@ -25,4 +28,25 @@
     line-height: 10px;
     font-size: 65%;
     visibility:hidden;
+}
+
+.nav-pills>li:hover .close{       
+    display:inline;
+}
+
+.nav-pills .close{
+    margin-top:-9px;
+    font-size: 30px;
+    display:none;
+}
+.messageImage
+{
+    float: left; 
+    margin-right: 5px; 
+    min-width:80px;
+}
+
+.messageImage img
+{
+    max-height: 75px
 }

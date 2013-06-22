@@ -18,7 +18,7 @@ namespace Flurfunk.Controllers
             this.messageService = messageService;
         }
 
-        public JsonResult GetOlderThan(int count = 50, string time = "")
+        public JsonResult GetOlderThan(int count = 50, string time = "", string keyword = "")
         {
             DateTime param;
             if (string.IsNullOrWhiteSpace(time))
@@ -30,10 +30,10 @@ namespace Flurfunk.Controllers
                 param = time.FromJsonDateTime(); 
             }
 
-            return Json(messageService.GetOlderThan(count, param));
+            return Json(messageService.GetOlderThan(count, param,keyword));
         }
 
-        public JsonResult GetNewerThan(string time = "")
+        public JsonResult GetNewerThan(string time = "", string keyword = "")
         {
             DateTime param;
             if (string.IsNullOrWhiteSpace(time))
@@ -46,20 +46,8 @@ namespace Flurfunk.Controllers
                 param = time.FromJsonDateTime();
             }
 
-            return Json(messageService.GetNewerThan(param));
-        }
-
-
-        public JsonResult Find(int count = 50, int startIndex = 0, string keyword = "")
-        {
-            return Json(messageService.Get(count, startIndex, keyword));
-        }
-
-        //// GET api/message/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+            return Json(messageService.GetNewerThan(param, keyword));
+        }     
         
         public void Create(string text)
         {

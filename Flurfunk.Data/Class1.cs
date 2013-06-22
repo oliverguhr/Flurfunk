@@ -38,17 +38,21 @@ namespace Flurfunk.Data
             db.Messages.Remove(Query.EQ("_id", messageId));
         }
 
-        public List<Message> GetNewerThan(DateTime time)
+        public List<Message> GetNewerThan(DateTime time, string keyword = "")
         {
-            var messages = db.Messages.AsQueryable().Where(x => x.Created > time).OrderByDescending(x => x.Created).ToList();
+            IQueryable<Message> data = string.IsNullOrWhiteSpace(keyword) ? db.Messages.AsQueryable() : Filter(keyword).AsQueryable();
 
-            return LoadUsers(messages);
+            var messages = data.Where(x => x.Created > time).OrderByDescending(x => x.Created);
+
+            return LoadUsers(messages.ToList());
         }
-        public List<Message> GetOlderThan(int count, DateTime time)
+        public List<Message> GetOlderThan(int count, DateTime time, string keyword = "")
         {
-            var messages = db.Messages.AsQueryable().Where(x => x.Created < time).OrderByDescending(x => x.Created).Take(count).ToList();
+            IQueryable<Message> data = string.IsNullOrWhiteSpace(keyword) ? db.Messages.AsQueryable() : Filter(keyword).AsQueryable();
+            
+            var messages = data.Where(x => x.Created < time).OrderByDescending(x => x.Created).Take(count);
 
-            return LoadUsers(messages);
+            return LoadUsers(messages.ToList());
         }
 
         [Obsolete]
@@ -76,7 +80,27 @@ namespace Flurfunk.Data
             }
 
             return result.OrderBy(x => x.Created).Skip(startIndex).Take(count).ToList();
-        }    
+        }
+
+        public List<Message> Filter(string keyword)
+        {
+            var textSearchCommand = new CommandDocument
+                {
+                    { "text", db.Messages.Name },
+                    { "search", keyword }
+                };
+            var commandResult = db.MongoDatabase.RunCommand(textSearchCommand);
+            var response = commandResult.Response["results"];
+
+            List<Message> result = new List<Message>();
+
+            foreach (var item in response.AsBsonArray)
+            {
+                result.Add(BsonSerializer.Deserialize<Message>(item["obj"].ToBsonDocument()));
+            }
+
+            return result;
+        }
 
         private List<Message> LoadUsers(List<Message> messages)
         {
@@ -84,7 +108,7 @@ namespace Flurfunk.Data
 
             var users = db.Users.Find(Query<User>.In(x => x._id, ids));
 
-            return messages.Join(users, message => message.CreatorId, user => user._id, (message, user) => { message.Creator = user; return message; }).ToList(); 
+            return messages.Join(users, message => message.CreatorId, user => user._id, (message, user) => { message.Creator = user; return message; }).ToList();
         }
     }
 
@@ -107,20 +131,29 @@ namespace Flurfunk.Data
             return newUser;
         }
 
-        public void Delete(ObjectId userId)
+        public void Delete(string userId)
         {
             db.Users.Remove(Query.EQ("_id", userId));
         }
 
-        public void AddFilter(string keyword, User user)
+        public void AddFilter(string keyword, string userId)
         {
+            var user = Get(userId);
+            user.Filter = user.Filter ?? new List<string>();
             user.Filter.Add(keyword);
             db.Users.Save(user);
         }
 
-        public User Get(ObjectId userid)
+        public void RemoveFilter(string keyword, string userId)
         {
-            return db.Users.FindOneById(userid);
+            var user = Get(userId);
+            user.Filter.Remove(keyword);
+            db.Users.Save(user);
+        }
+
+        public User Get(string userid)
+        {
+            return db.Users.FindOne(Query<User>.EQ(x => x._id, userid));
         }
 
         public User GetByProviderId(string providerId)
@@ -128,7 +161,7 @@ namespace Flurfunk.Data
             return db.Users.AsQueryable().SingleOrDefault(x => x.ProviderId == providerId);
         }
 
-        public User Get(string userName)
+        public User GetByName(string userName)
         {
             return db.Users.AsQueryable().Where(user => user.Name == userName).SingleOrDefault();
         }
@@ -194,7 +227,7 @@ namespace Flurfunk.Data
             mongoDatabase = mongoServer.GetDatabase(databaseName);
 
             Messages.EnsureIndex(new IndexKeysDocument("Text", "text"));
-            Users.EnsureIndex("ProviderId");            
+            Users.EnsureIndex("ProviderId");
         }
 
         public MongoCollection<User> Users { get { return mongoDatabase.GetCollection<User>("users"); } }
