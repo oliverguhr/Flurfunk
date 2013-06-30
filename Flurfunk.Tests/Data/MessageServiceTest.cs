@@ -35,7 +35,7 @@ namespace Flurfunk.Tests.Data
             messageService.Create("None", newuser._id);
             messageService.Create("Lorem ipsum dolor sit amet, consetetur sadipscing elitr", newuser._id);
 
-            var result = messageService.Get(10, 0, "World");
+            var result = messageService.GetOlderThan(10, DateTime.Now, "world");
 
             Assert.IsNotNull(result.SingleOrDefault(x => x._id == testMessage._id));
         }

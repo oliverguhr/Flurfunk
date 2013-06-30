@@ -33,7 +33,9 @@ namespace Flurfunk.Controllers
         public JsonResult Get()
         {
             var filter = userService.Get(SessionHelper.CurrentUser._id).Filter;
-            return Json(filter, JsonRequestBehavior.AllowGet);
+            if(filter != null)
+                return Json(filter.OrderBy(x => x), JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         public void Remove(string keyword)

@@ -34,7 +34,8 @@
 	$scope.removeFilter = function (keyword) {
 	    console.log("remove " + keyword);	    
 		$http.post(app.baseUrl + "filter/remove", {'keyword':keyword}).success(function () {	        
-		    $scope.getFilter();		
+		    $scope.getFilter();
+		    messageService.setKeyword('');
 		});
 	};
 

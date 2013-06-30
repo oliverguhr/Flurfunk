@@ -39,7 +39,7 @@ namespace Flurfunk.Data.Model
         /// If the is send to a group, this field contains the id of the group
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]        
-        public string Group { get; set; }
+        public string GroupId { get; set; }
 
         /// <summary>
         /// DateTime when the message was created

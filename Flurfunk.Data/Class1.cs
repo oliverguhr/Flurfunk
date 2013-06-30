@@ -25,9 +25,9 @@ namespace Flurfunk.Data
             return Create(text, creator, ObjectId.Empty.ToString());
         }
 
-        public Message Create(string text, string creator, string Group)
+        public Message Create(string text, string creator, string groupId)
         {
-            Message newMessage = new Message() { CreatorId = creator, Text = text, Group = Group, Created = DateTime.Now };
+            Message newMessage = new Message() { CreatorId = creator, Text = text, GroupId = groupId, Created = DateTime.Now };
             newMessage.Validate();
             db.Messages.Insert(newMessage);
             return newMessage;
@@ -38,18 +38,36 @@ namespace Flurfunk.Data
             db.Messages.Remove(Query.EQ("_id", messageId));
         }
 
-        public List<Message> GetNewerThan(DateTime time, string keyword = "")
+        public List<Message> GetNewerThan(DateTime time, string keyword = "", string groupId = "")
         {
             IQueryable<Message> data = string.IsNullOrWhiteSpace(keyword) ? db.Messages.AsQueryable() : Filter(keyword).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(groupId))
+            {
+                data = data.Where(x => x.GroupId == groupId);
+            }
+            else
+            {
+                data = data.Where(x => x.GroupId == ObjectId.Empty.ToString());
+            }
 
             var messages = data.Where(x => x.Created > time).OrderByDescending(x => x.Created);
 
             return LoadUsers(messages.ToList());
         }
-        public List<Message> GetOlderThan(int count, DateTime time, string keyword = "")
+        public List<Message> GetOlderThan(int count, DateTime time, string keyword = "", string groupId = "")
         {
             IQueryable<Message> data = string.IsNullOrWhiteSpace(keyword) ? db.Messages.AsQueryable() : Filter(keyword).AsQueryable();
-            
+
+            if (!string.IsNullOrWhiteSpace(groupId))
+            {
+                data = data.Where(x => x.GroupId == groupId);
+            }
+            else
+            {
+                data = data.Where(x => x.GroupId == ObjectId.Empty.ToString());
+            }
+
             var messages = data.Where(x => x.Created < time).OrderByDescending(x => x.Created).Take(count);
 
             return LoadUsers(messages.ToList());
@@ -109,7 +127,7 @@ namespace Flurfunk.Data
             var users = db.Users.Find(Query<User>.In(x => x._id, ids));
 
             return messages.Join(users, message => message.CreatorId, user => user._id, (message, user) => { message.Creator = user; return message; }).ToList();
-        }
+        }     
     }
 
     public class UserService : IUserService
@@ -170,43 +188,62 @@ namespace Flurfunk.Data
     public class GroupService : IGroupService
     {
         private IDatabase db;
+        private IUserService userService;
 
-        public GroupService(IDatabase database)
+        public GroupService(IDatabase database, IUserService userService)
         {
             db = database;
+            this.userService = userService;
         }
 
         public Group Create(string name)
         {
+            if (db.Groups.AsQueryable().Any(x => x.Name == name)) 
+            {
+                throw new Exception("Lösung finden.");
+            }
+
             Group newGroup = new Group();
             newGroup.Name = name;
             newGroup.Validate();
 
+            db.Groups.Insert(newGroup);
             return newGroup;
         }
 
-        public void Join(string groupId, User user)
+        public void Join(string groupId, string userId)
         {
+            var user = userService.Get(userId);
             Group grouptToAdd = Get(groupId);
-            user.Groups.Add(groupId, grouptToAdd.Name);
-            db.Users.Save(user);
+            user.Groups = user.Groups ?? new Dictionary<string, string>();
+            if (!user.Groups.Any(x => x.Key == groupId))
+            {   user.Groups.Add(groupId, grouptToAdd.Name);            
+                db.Users.Save(user);
+            }              
         }
 
-        public void Leave(string groupId, User user)
+        public void Leave(string groupId, string userId)
         {
+            var user = userService.Get(userId);
             user.Groups.Remove(groupId);
             db.Users.Save(user);
         }
 
         public Group Get(string groupId)
         {
-            return db.Groups.FindOneById(groupId);
+            return db.Groups.FindOneById(ObjectId.Parse(groupId));
         }
-
+        
         public List<User> GetAllUsersThatAreNotInGroup(string groupId)
         {
+            //not needed yet
             return db.Users.AsQueryable().Where(x => !x.Groups.ContainsKey(groupId)).ToList();
         }
+
+        public List<Group> Find(string groupName)
+        {
+            return db.Groups.AsQueryable().Where(x=> x.Name.ToLower().Contains(groupName.ToLower())).OrderBy(x=> x.Name).ToList();
+        }        
     }
 
     public class Database : Flurfunk.Data.Interface.IDatabase

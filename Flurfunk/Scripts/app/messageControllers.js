@@ -2,6 +2,8 @@
     var messageService = {};
 
     messageService.filterKeyword = "";
+    messageService.groupId = "";
+    messageService.groupName = "";
 
     messageService.onRefresh = function () {
         console.log("onRefresh");
@@ -19,17 +21,24 @@
         $rootScope.$broadcast('filterMessages');
     };
 
+    messageService.setGroup = function (groupId, groupName) {
+        messageService.groupId = groupId;
+        messageService.groupName = groupName;
+        $rootScope.$broadcast('groupChanged');
+        $rootScope.$broadcast('filterMessages');
+    };
+
     return messageService;
 });
 
 function sendMessageController($scope,$http, messageService) {
-
+    $scope.groupName = "allen";
     $scope.sendMessage = function () {
         if ($scope.message.length > 140 || $scope.message.length < 1)
             return;
         console.log("new message submited");
 
-        $http.post(app.baseUrl + "message/create", { text: $scope.message }).success(function () {
+        $http.post(app.baseUrl + "message/create", { text: $scope.message, groupId : messageService.groupId }).success(function () {
             console.log("message successful submited")
             $scope.message = '';            
             messageService.loadNewMessages();
@@ -47,6 +56,17 @@ function sendMessageController($scope,$http, messageService) {
             $scope.messageButtonClass = "primary";
         }
     }
+
+    $scope.$on('groupChanged', function () {
+        if (messageService.groupName.length > 0)
+        {
+            $scope.groupName = messageService.groupName;
+        }
+        else
+        {
+            $scope.groupName = "allen";
+        }
+    });
 }
 
 function isMessagesInArray(id, messageArray)
@@ -77,7 +97,7 @@ function loadMessageController($scope, $http, messageService) {
 
         var url = app.baseUrl + "message/GetOlderThan";
         console.log("Loading Messages Older Than" + $scope.after);
-        $http.post(url, { count: 50, time: $scope.after, 'keyword': messageService.filterKeyword }).success(function (data) {
+        $http.post(url, { count: 50, time: $scope.after, 'keyword': messageService.filterKeyword, "groupId":messageService.groupId }).success(function (data) {
             if (data.length === 0)
                 $scope.end = true;          
 
@@ -107,7 +127,7 @@ function loadMessageController($scope, $http, messageService) {
         console.log("fetching new messages newer than " + app.convert.date(time));
 
         var url = app.baseUrl + "message/GetNewerThan";
-        $http.post(url, { 'time': time, 'keyword':messageService.filterKeyword }).success(function (data) {
+        $http.post(url, { 'time': time, 'keyword': messageService.filterKeyword, "groupId": messageService.groupId }).success(function (data) {
             for (var i = 0; i < data.length; i++) {
                 if (!isMessagesInArray(data[i]._id, $scope.items))
                     $scope.items.splice(i, 0, data[i]);
