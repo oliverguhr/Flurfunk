@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@*@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+                To learn more about ASP.NET MVC visit
+                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
+                If you have any questions about ASP.NET MVC visit
+                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
+            </p>
+        </div>
+    </section>
+}*@
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var aaData = [];
+
+            $('#example').dataTable({
+                "sScrollY": "600px",                
+                "aoColumnDefs": [
+                    { "sWidth": "30px", "aTargets": [0] },
+                    { "sWidth": "200px", "aTargets": [1] },
+                    { "sWidth": "80px", "aTargets": [2] },
+                    { "sWidth": "120px", "aTargets": [3] }                    
+                ],
+                "aoColumns": [ { "mData": "Id" },
+                               { "mData": "Date" },
+                               { "mData": "Level" },
+                               { "mData": "Logger" },
+                               { "mData": "Message" }],
+                "sDom": "frtiS",
+                "bDeferRender": true,
+                "fnInitComplete": function () {
+
+                    $.getJSON("Home/GetData", function (data) {
+                        $('#example').dataTable().fnAddData(data);               
+                    });
+                    
+                },
+                "fnRowCallback": function (nRow, aData) {
+                    if (aData.Level == "Fatal")
+                    {
+                        $(nRow).find(':nth-child(3)').css({ "color": "#8a2be2" });
+                    }
+                    if (aData.Level == "Error")
+                    {
+                        $(nRow).find(':nth-child(3)').css({ "color": "red" });
+                    }               
+                    if (aData.Level == "Warning") {
+                        $(nRow).find(':nth-child(3)').css({ "color": "#ffb400" });
+                    }
+                    if (aData.Level == "Info") {
+                        $(nRow).find(':nth-child(3)').css({ "color": "green" });
+                    }
+                    //console.log(nRow, aData);
+                }
+            }).columnFilter();
+        });
+
+
+
+
+    </script>
+}
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Level</th>
+            <th>Logger</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody></tbody>  
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Level</th>
+            <th>Logger</th>
+            <th>Message</th>
+        </tr>
+    </tfoot>
+</table>
