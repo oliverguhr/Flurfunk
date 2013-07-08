@@ -121,9 +121,9 @@
       <Project>{9c49c94e-8152-43ad-81b5-9625ae8d6f42}</Project>
       <Name>Flurfunk.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Flurfunk\Flurfunk.csproj">
+    <ProjectReference Include="..\Flurfunk\Flurfunk.Web.csproj">
       <Project>{A40690FA-49ED-4CA8-B67A-E08D9A783A9F}</Project>
-      <Name>Flurfunk</Name>
+      <Name>Flurfunk.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

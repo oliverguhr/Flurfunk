@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk", "Flurfunk\Flurfunk.csproj", "{A40690FA-49ED-4CA8-B67A-E08D9A783A9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk.Web", "Flurfunk\Flurfunk.Web.csproj", "{A40690FA-49ED-4CA8-B67A-E08D9A783A9F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flurfunk.Tests", "Flurfunk.Tests\Flurfunk.Tests.csproj", "{444E5CAD-E406-4CAD-A028-72CF7247A874}"
 EndProject

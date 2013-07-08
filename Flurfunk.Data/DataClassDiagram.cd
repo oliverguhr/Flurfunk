@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Flurfunk.Data.Database" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAwABAAI=</HashCode>
+      <FileName>Database.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flurfunk.Data.GroupService" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAQAAjAAAAAAAAAAAEIAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>GroupService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flurfunk.Data.MessageService" BaseTypeListCollapsed="true">
+    <Position X="1" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAQgABAAAAAAAAAABEAAEAAAAIAAAAAAAA=</HashCode>
+      <FileName>MessageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.221" Collapsed="true" />
+  </Class>
+  <Class Name="Flurfunk.Data.UserService" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAABAAAIQAAAAAQEAAEAAAAAAAAAAAAg=</HashCode>
+      <FileName>UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flurfunk.Data.Validatable">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Validatable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Data.Model.Group">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Data.Model.Message">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAACAABAAAAAAAAAAAQAEAAACAAAAAA=</HashCode>
+      <FileName>Model\Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Data.Model.User">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAABABAAAQAABAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Flurfunk.Data.Interface.IDatabase">
+    <Position X="6.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAI=</HashCode>
+      <FileName>Interface\IDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Flurfunk.Data.Interface.IGroupService">
+    <Position X="2.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAhAAAAAAAAAAAEIAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IGroupService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Flurfunk.Data.Interface.IMessageService">
+    <Position X="1" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAgAAAAAAAAAAAAAEAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IMessageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Flurfunk.Data.Interface.IUserService">
+    <Position X="4.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAIQAAAAAQEAAEAAAAAAAAAAAAg=</HashCode>
+      <FileName>Interface\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
