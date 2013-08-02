@@ -1,2 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Wevision.Controllers.FacebookLoginController">
+    <Position X="2.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAQAQAA=</HashCode>
+      <FileName>Controllers\FacebookLoginController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Controllers.FilterController">
+    <Position X="2.75" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAADAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\FilterController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Controllers.GroupController">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAiAAAAAAAAIAAEIAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\GroupController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Controllers.HomeController">
+    <Position X="0.5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEACAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flurfunk.Controllers.MessageController">
+    <Position X="5" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAgBAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MessageController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
